@@ -26,7 +26,9 @@ const Location = function (instance, source, destination) {
   this.original = { source };
   var locations = { source, destination };
   for (var location in locations) {
-    locations[location] = path.resolve(locations[location]).replace(/\\/gu, "/");
+    locations[location] = path
+      .resolve(locations[location])
+      .replace(/\\/gu, "/");
   }
   this.source = this.process(locations.source);
   this.destination = locations.destination;

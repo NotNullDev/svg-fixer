@@ -3,11 +3,8 @@
 const path = require("path");
 const is = require("oslllo-validator");
 const Progress = require("./progress");
-const Piscina = require("piscina");
 
-const workerPool = new Piscina({
-  filename: path.resolve(__dirname, "tracer.js")
-});
+const tracerFunc = require("./tracer");
 
 const Processor = function (fixer) {
   this.fixer = fixer;
@@ -47,7 +44,7 @@ Processor.prototype = {
         });
 
         const workerPromises = svgs.map(async (svg) => {
-          await workerPool.run(svg);
+          await tracerFunc(svg);
           // eslint-disable-next-line no-empty-function
           this.tick(() => {});
         });

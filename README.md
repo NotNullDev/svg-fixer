@@ -108,3 +108,10 @@ The icon in a font pack after we run it through [`SVGFixer()`](https://github.co
 ```
 
 ---
+
+
+----
+
+```js
+await SVGFixer(source, destination, options).fix();
+```

@@ -1,9 +1,5 @@
 "use strict";
 
-const path = require("path");
-const is = require("oslllo-validator");
-const Progress = require("./progress");
-
 const tracerFunc = require("./tracer");
 
 const Processor = function (fixer) {
@@ -15,30 +11,17 @@ const Processor = function (fixer) {
 
 Processor.prototype = {
   start: function (callback) {
-    if (is.fn(callback)) {
-      this.pipeline()
-        .then((fixer) => {
-          callback(null, fixer);
-        })
-        .catch((err) => {
-          callback(err);
-        });
-
-      return this.fixer;
-    }
-
     return this.pipeline();
   },
   pipeline: function () {
     return new Promise(async (resolve, reject) => {
       try {
-        this.setup();
-        var svgs = this.source;
+        var svgs = this.source ?? []; // TODO: list of sources
 
         const resolution = this.fixer.options.get("traceResolution");
 
         svgs = svgs.map((source) => {
-          var destination = path.join(this.destination, path.basename(source));
+          const destination = "TODO: not used anyway";
 
           return { source, destination, resolution };
         });
@@ -59,25 +42,11 @@ Processor.prototype = {
       }
     });
   },
-  setup: function () {
-    if (this.fixer.options.get("showProgressBar")) {
-      this.progress = new Progress(
-        this.fixer.location.original.source,
-        this.source.length
-      );
-    }
-  },
+  setup: function () {},
   tick: function (callback) {
-    if (is.defined(this.progress)) {
-      this.progress.tick();
-    }
     callback();
   },
-  teardown: function () {
-    if (is.defined(this.progress)) {
-      this.progress.stop();
-    }
-  },
+  teardown: function () {},
 };
 
 module.exports = Processor;

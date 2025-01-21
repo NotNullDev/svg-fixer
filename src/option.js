@@ -1,7 +1,6 @@
 "use strict";
 
 const error = require("./error");
-const is = require("oslllo-validator");
 
 const Option = function (options) {
   this.data = {
@@ -9,12 +8,8 @@ const Option = function (options) {
     throwIfDestinationDoesNotExist: true,
     traceResolution: 600,
   };
-  if (!is.object(options)) {
-    throw error.invalidParameterError("options", "object", options);
-  }
-  if (!is.empty(options)) {
-    this.update(options);
-  }
+
+  this.update(options);
 };
 
 Option.prototype = {
@@ -22,9 +17,6 @@ Option.prototype = {
     return this.data;
   },
   get: function (option) {
-    if (!is.defined(option) || !is.string(option)) {
-      throw error.invalidParameterError("option", "string", option);
-    }
     var options = Object.keys(this.data);
     if (!options.includes(option)) {
       throw error.invalidParameterError(

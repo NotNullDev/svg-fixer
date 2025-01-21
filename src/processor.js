@@ -11,12 +11,15 @@ const Processor = function (fixer) {
 
 Processor.prototype = {
   start: function (callback) {
+    console.log(`haha`);
     return this.pipeline();
   },
   pipeline: function () {
     return new Promise(async (resolve, reject) => {
       try {
-        var svgs = this.source ?? []; // TODO: list of sources
+        var svgs = this.source ?? ["haha"]; // TODO: list of sources
+
+        console.log(`svgs`, svgs);
 
         const resolution = this.fixer.options.get("traceResolution");
 

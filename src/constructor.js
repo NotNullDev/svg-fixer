@@ -7,7 +7,9 @@ const SVGFixer = function (source, destination, options = {}) {
   if (!(this instanceof SVGFixer)) {
     return new SVGFixer(source, destination, options);
   }
+
   this.options = new Option(options);
+  this.processor = new Processor(this);
   // this.location = new Location(this, source, destination);
   this.source = "this.location.source";
   this.destination = "this.location.destination";
@@ -17,7 +19,7 @@ const SVGFixer = function (source, destination, options = {}) {
 
 SVGFixer.prototype = {
   fix: function (callback) {
-    return processor.start();
+    return this.processor.start();
   },
 };
 

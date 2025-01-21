@@ -43,7 +43,7 @@ Option.prototype = {
     var preset = this.get(setting);
 
     for (var option in options) {
-      if (preset[option]) {
+      if (preset[option] || preset[option] === false) {
         this.data[setting][option] = options[option];
       } else {
         var expected = Object.keys(preset);

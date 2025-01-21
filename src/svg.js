@@ -9,9 +9,10 @@ const Svg = function (path, traceResolution) {
   this.traceResolution = traceResolution;
   this.png = new Object();
   this.resized = new Object();
-  this.svg2 = Svg2(this.path);
-  this.element = this.svg2.toElement();
+  this.element = document.querySelector("svg");
+  console.log(`this.element`, this.element);
   this.outerHTML = this.element.outerHTML;
+  this.svg2 = Svg2(this.outerHTML);
   this.original = this.getOriginal();
   this.resized = this.getResized();
   this.scale = this.getScale();

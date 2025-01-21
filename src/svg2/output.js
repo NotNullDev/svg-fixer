@@ -29,8 +29,7 @@ function bmp() {
 }
 
 function _getDocument(input) {
-  const document = window.createDocument(input, true);
-  return document;
+  return window.document;
 }
 
 function toElement(input) {
@@ -49,8 +48,8 @@ function toUri(options = {}, callback) {
 
   async function generateDataUri() {
     const buffer = await png;
-    var image = await jimp.read(buffer);
-    var uri = await image.getBase64Async(mime);
+    var image = await jimp.Jimp.read(buffer);
+    var uri = await image.getBase64(mime);
     if (base64) {
       uri = uri.replace(new RegExp(`^data:${mime};base64,`), "");
     }

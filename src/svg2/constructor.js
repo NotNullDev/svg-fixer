@@ -32,7 +32,7 @@ const Svg2 = function (input) {
 
 Svg2.prototype = {
   check: function (input) {
-    input = Buffer.from(input).toString();
+    // input = Buffer.from(input).toString(); // TODO
 
     return input;
   },

@@ -26,8 +26,9 @@ Processor.prototype = {
     var i = this.instance;
     i.svg
       .png(i.svg.html())
-      .then(async (png) => {
-        png = await jimp.read(png);
+      .then(async (pngBytes) => {
+        // png bytes as Uint8Array
+        let png = await jimp.Jimp.read(pngBytes.buffer);
         /**
          * @ignore
          * @description - Because only pngs can be transparent
@@ -50,11 +51,15 @@ Processor.prototype = {
         callback(error);
       });
   },
-  blank: function (width = jimp.AUTO, height = jimp.AUTO, background) {
+  blank: function (width, height, background) {
     if (!background) {
       background = this.instance.options.get("background").color;
     }
-    return new jimp(width, height, background);
+    return new jimp.Jimp({
+      width,
+      height,
+      color: background,
+    });
   },
   background: async function (image, dimensions) {
     var { width, height } = dimensions;

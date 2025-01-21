@@ -3,7 +3,8 @@
 const Svg2 = require("..");
 const error = require("./error");
 const constants = require("./constants");
-const { renderAsync } = require("@resvg/resvg-js");
+const { initWasm, Resvg } = require("@resvg/resvg-wasm");
+
 const Svg = function (instance) {
   this.instance = instance;
   this.update(instance.toElement(instance.input.string), true);
@@ -45,7 +46,7 @@ Svg.prototype = {
       }
       return output;
     }
-    if (!Number.isNaN(input)) {
+    if (Number.isFinite(input)) {
       output.width = current.width * input;
       output.height = current.height * input;
       output.scale = input;
@@ -87,8 +88,13 @@ Svg.prototype = {
         loadSystemFonts: true, // It will be faster to disable loading system fonts.
       },
     };
-    const resvg = await renderAsync(svg, opts);
-    const pngBuffer = resvg.asPng();
+
+    // init wasm from docs
+    await initWasm(fetch("https://unpkg.com/@resvg/resvg-wasm/index_bg.wasm"));
+
+    const resvgJS = new Resvg(svg, opts);
+
+    const pngBuffer = resvgJS.render().asPng();
 
     return pngBuffer;
   },

@@ -128,3 +128,18 @@ https://jimp-dev.github.io/jimp/guides/browser/
 // https://www.npmjs.com/package/svg2png-wasm
 
 svg2png-wasm-node-10
+
+
+```sh
+bun build --target bun ./src/index.js --outdir dist
+bun build --outdir dist ./src/index.js
+bun build --outdir dist ./src/index.js && cp ./dist/index.js browser-test/index.js
+
+
+```
+
+```text
+AbstractTokenizer_1([^.]+.)?.AbstractTokenizer \{
+
+AbstractTokenizer {
+```

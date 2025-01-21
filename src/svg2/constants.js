@@ -1,13 +1,13 @@
 "use strict";
 
-const jimp = require("jimp");
+const { JimpMime } = require("jimp");
 
 module.exports = {
-	AUTO: "auto",
-	FORMATS: {
-		bmp: jimp.MIME_BMP,
-		png: jimp.MIME_PNG,
-		tiff: jimp.MIME_TIFF,
-		jpeg: jimp.MIME_JPEG,
-	},
+  AUTO: "auto",
+  FORMATS: {
+    bmp: JimpMime.bmp,
+    png: JimpMime.png,
+    tiff: JimpMime.tiff,
+    jpeg: JimpMime.jpeg,
+  },
 };

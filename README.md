@@ -114,4 +114,17 @@ The icon in a font pack after we run it through [`SVGFixer()`](https://github.co
 
 ```js
 await SVGFixer(source, destination, options).fix();
+
 ```
+
+// https://github.com/thx/resvg-js
+// domino - ssr dom impl (not needed for browser)
+
+### jimp - https://www.npmjs.com/package/jimp
+
+An image processing library for Node written entirely in JavaScript, with zero native dependencies
+https://jimp-dev.github.io/jimp/guides/browser/
+
+// https://www.npmjs.com/package/svg2png-wasm
+
+svg2png-wasm-node-10

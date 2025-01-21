@@ -1,7 +1,7 @@
 "use strict";
 
-const Svg2 = require("oslllo-svg2");
-const Potrace = require("oslllo-potrace");
+const Svg2 = require("./svg2/index");
+const Potrace = require("./potrace/index");
 
 const Svg = function (path, traceResolution) {
   this.filled = false;
@@ -19,7 +19,9 @@ const Svg = function (path, traceResolution) {
 
 Svg.prototype = {
   getResized: function () {
-    var element = Svg2(this.outerHTML).svg.resize(this.getResizeDimensions()).toElement();
+    var element = Svg2(this.outerHTML)
+      .svg.resize(this.getResizeDimensions())
+      .toElement();
     var svg2 = Svg2(element.outerHTML);
     var dimensions = svg2.svg.dimensions();
 
@@ -30,7 +32,9 @@ Svg.prototype = {
 
     return {
       width: width,
-      height: (width / this.original.dimensions.width) * this.original.dimensions.height,
+      height:
+        (width / this.original.dimensions.width) *
+        this.original.dimensions.height,
     };
   },
   getOriginal: function () {
@@ -90,7 +94,8 @@ Svg.prototype = {
           element.setAttribute(attribute.name, value.join(" "));
         } else if (element.tagName.toLowerCase() === "path") {
           if (
-            (attribute.name === "stroke" && this.valueIsNotBlack(attribute.value)) ||
+            (attribute.name === "stroke" &&
+              this.valueIsNotBlack(attribute.value)) ||
             (attribute.name === "fill" && this.valueIsNotBlack(attribute.value))
           ) {
             element.setAttribute(attribute.name, attribute.value);
@@ -171,9 +176,14 @@ Svg.prototype = {
   process: async function () {
     var element = this.checkFillState(this.resized.element.cloneNode(true));
     if (!element.getAttribute("viewBox")) {
-      element.setAttribute("viewBox", `0 0 ${this.original.dimensions.width} ${this.original.dimensions.height}`);
+      element.setAttribute(
+        "viewBox",
+        `0 0 ${this.original.dimensions.width} ${this.original.dimensions.height}`
+      );
     }
-    var pngBuffer = await Svg2(element.outerHTML).png({ transparent: false }).toBuffer();
+    var pngBuffer = await Svg2(element.outerHTML)
+      .png({ transparent: false })
+      .toBuffer();
     var traced = await Potrace(pngBuffer, { svgSize: this.scale }).trace();
     traced = this.toOriginal(traced);
 
